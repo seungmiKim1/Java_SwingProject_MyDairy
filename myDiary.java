@@ -7,6 +7,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.awt.event.*;
 import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -14,6 +18,9 @@ import java.util.Vector;
 
 class mdLogin extends JFrame implements ActionListener {
     JTextField userName,title1; JPasswordField passwd;
+    private PreparedStatement pstmt;
+    private Connection conn;
+    private ResultSet rs;
     JButton b1, b2, b3;
     private Font f1,f2;
 
@@ -23,7 +30,7 @@ class mdLogin extends JFrame implements ActionListener {
         ct.setLayout(null);
         ct.setBackground(new Color(255,204,204));
 
-        ImageIcon ic = new ImageIcon("C:\\Users\\Win10\\Desktop\\학교\\Pic\\mydairyLogo4.png");
+        ImageIcon ic = new ImageIcon("C:\\Users\\minii\\Desktop\\Pic\\mydairylogo4.png");
         JLabel lblmage1 = new JLabel(ic);
         ct.add(lblmage1);
         lblmage1.setBounds(135,230,200,200);
@@ -67,13 +74,13 @@ class mdLogin extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent ae){
         String s = ae.getActionCommand();
-        if ( s == "로그인" ){
-            // 메인 캘린더 페이지로 이동 (try~catch로 try > 메인 캘린더 이동, catch : 잘못된 사용자입니다 메시지 출력)
-            JavaSwingCalendar  jw = new JavaSwingCalendar("달력");
-            jw.setSize(400, 550);
-            jw.setLocation(400,300);
-            jw.setVisible(true);
-            dispose();
+
+        if (s == "로그인") {
+                JavaSwingCalendar jw = new JavaSwingCalendar("달력");
+                jw.setSize(400, 550);
+                jw.setLocation(400, 300);
+                jw.setVisible(true);
+                dispose();
         }
         else if ( s == "이용하기" ){
             NewMember my = new NewMember("MyDiary 이용하기");
@@ -146,7 +153,7 @@ class setPW extends JFrame implements ActionListener {
             } catch (ClassNotFoundException e) {
                 System.err.println("드라이버 로드에 실패했습니다."); }
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student?serverTimezone=UTC","root", "a12345");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student2?serverTimezone=UTC","root", "tjdals35");
                 System.out.println("DB 연결 완료");
                 Statement dbSt = con.createStatement();
                 System.out.println("JDBC 드라이버가 정상적으로 연결되었습니다.");
@@ -157,8 +164,8 @@ class setPW extends JFrame implements ActionListener {
                 MessageDialog md = new MessageDialog(this,"비밀번호 변경",true,"비밀번호가 변경되었습니다. 다시 로그인해주세요 :) ");
                 md.show();
                 System.out.println("데이터 수정 완료");
-                //dbSt.close();
-                //con.close();
+                dbSt.close();
+                con.close();
             }catch ( SQLException e) {
                 System.out.println( "SQLException : " + e.getMessage()); //e.printStackTrace();
             }
@@ -245,7 +252,7 @@ class NewMember extends JFrame implements ActionListener{
                 System.err.println("드라이버 로드에 실패했습니다."); }
 
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student?serverTimezone=UTC","root", "a12345");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student2?serverTimezone=UTC","root", "tjdals35");
                 System.out.println("DB 연결 완료");
                 Statement dbSt = con.createStatement();
                 System.out.println("JDBC 드라이버가 정상적으로 연결되었습니다.");
