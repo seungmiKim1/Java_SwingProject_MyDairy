@@ -463,7 +463,7 @@ class DayClickButton implements ActionListener {
         month = Integer.valueOf(comboMonth.getSelectedItem().toString());
         day = Integer.valueOf(ae.getActionCommand());
         System.out.println(year + "년 " + month + "월 " + day + "일 선택됨!");
-        Show show = new Show("일기");
+        Show show = new Show("일기", year, month, day);
         show.setSize(500, 800);
         show.setLocation( 400,100);
         show.setVisible(true);
@@ -479,14 +479,16 @@ class Show extends JFrame implements ActionListener{ //일기 편집전 일기�
     static String txt;  //일기장 내용 텍스트
     static JTextField text;  //일기장 텍스트 필드
     JButton jb, jb2, jb3,jb4, jb5;  // 액션 리스너 벝튼
-    JLabel imgLabel;
+    JLabel imgLabel, labelYear, labelMonth, labelDay;
     JScrollPane jscp1; // 일기장 스크롤
+    int selYear, selMonth, selDay;
 
 
 
 
-    Show(String title){  //일기 보기 메소드
+    Show(String title, int selectedYear, int selectedMonth, int selectedDay){  //일기 보기 메소드
         setTitle("일기");
+        selYear = selectedYear; selMonth = selectedMonth; selDay = selectedDay;
 
         Container ct = getContentPane();
 
@@ -505,6 +507,20 @@ class Show extends JFrame implements ActionListener{ //일기 편집전 일기�
         jscp1.setSize(400, 500);
 
         ct.add(jscp1);
+
+        labelYear = new JLabel(Integer.toString(selYear) + "년");
+        labelMonth = new JLabel(Integer.toString(selMonth) + "월");
+        labelDay = new JLabel(Integer.toString(selDay) + "일");
+        labelYear.setLocation(260, 50);
+        labelYear.setSize(80, 50);
+        labelYear.setFont(new Font("serif", Font.BOLD, 20));
+        labelMonth.setLocation(320, 50);
+        labelMonth.setSize(80, 50);
+        labelMonth.setFont(new Font("Serif", Font.BOLD, 20));
+        labelDay.setLocation(380, 50);
+        labelDay.setSize(80, 50);
+        labelDay.setFont(new Font("Serif", Font.BOLD, 20));
+        ct.add(labelYear); ct.add(labelMonth); ct.add(labelDay);
 
         Button jb = new Button("save"); //일기의 내용을 저장하는 버튼
         jb.setLocation(120, 720);
@@ -655,17 +671,6 @@ class Edit extends JFrame implements ActionListener{ // 일기 편집창 클래�
 
 
 
-class Mydairy {
-    public static void main(String[] args) {
-        Show win = new Show("일기 편집");
-
-        win.setSize(500, 800);
-        win.setLocation( 400,100);
-        win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        win.show();
-
-    }
-}
 
 class ListCourses extends JFrame implements ActionListener,MouseListener {
     Vector<String> columnName;	//표의 각각 제목
