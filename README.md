@@ -4,7 +4,7 @@
 객체지향언어실습(Java 기반) 기말고사 대체 프로젝트 
 개발 기간 : 2021.11 ~ 2021.12.12  
 각자 개발 맡은 화면 )  
-KSM : 로그인 + DB 연동 
+KSM : 로그인 + DB 연동   
 LCH : Main Calendar 화면  
 JSM : 일기 Edit 화면 + 파일 탐색기  
 LSH : TodoList 화면  
